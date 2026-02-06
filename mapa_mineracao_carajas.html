@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Mapa Interativo – Municípios de Influência da Mineração em Carajás</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+#map { height: 100vh; width: 100%; }
+
+.popup-img {
+  width: 180px;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.legend {
+  background: white;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  max-width: 280px;
+}
+
+.legend b {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 6px;
+}
+
+.legend i {
+  width: 14px;
+  height: 14px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.9;
+  border: 1px solid #333;
+}
+
+.info-box {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  max-width: 320px;
+  z-index: 1000;
+  font-size: 12px;
+}
+
+.info-box h3 {
+  margin: 0 0 8px 0;
+  color: #d32f2f;
+  font-size: 14px;
+}
+
+.info-box p {
+  margin: 4px 0;
+  color: #555;
+}
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+<div class="info-box">
+  <h3>🗺️ Municípios com altos impacto da Mineração</h3>
+  <p><strong>Clique nos marcadores</strong> para ver detalhes dos riscos socioambientais</p>
+  <p style="font-size: 11px; color: #999; margin-top: 8px;">Foco: Parauapebas, Canaã dos Carajás e Marabá</p>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+var map = L.map("map").setView([-6.20, -49.80], 8);
+
+// Base map
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap contributors",
+  maxZoom: 19
+}).addTo(map);
+
+// Grupos de camadas
+var municipios = L.layerGroup();
+
+// ========== MUNICÍPIOS DE INFLUÊNCIA DA MINERAÇÃO ==========
+
+// 1. PARAUAPEBAS - Maior Mina de Ferro a Céu Aberto
+L.marker([-6.0673, -49.9022], {
+  icon: L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  })
+})
+.addTo(municipios)
+.bindPopup(
+"<div style='font-family: Arial; width: 320px;'>" +
+"<h3 style='margin: 0 0 8px 0; color: #d32f2f;'>🔴 PARAUAPEBAS</h3>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>Maior Mina de Ferro a Céu Aberto do Mundo</strong></p>" +
+"<hr style='margin: 8px 0; border: none; border-top: 1px solid #ddd;'>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>📊 Dados Gerais:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li>População: 305.771 habitantes</li>" +
+"<li>PIB: R$ 49,7 bilhões</li>" +
+"<li>Principal operadora: Vale S.A.</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 12px;'><strong>⚠️ RISCOS SOCIOAMBIENTAIS CRÍTICOS:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li><strong>Deslizamento de barragem:</strong> lançamento da lama nos municípios de marabá, parauapebas e canaã dos carajás destruindo edificações e contaminando o solo e lençol freático com os metais pesados</li>" +
+"<li><strong>Contaminação Hídrica:</strong> Presença de metais pesados (ferro, cobre, zinco) no Rio Parauapebas</li>" +
+"<li><strong>Poluição do Ar:</strong> Poeira de minério de ferro causa doenças respiratórias</li>" +
+"<li><strong>Impacto Social:</strong> Pressão migratória desordenada, falta de infraestrutura</li>" +
+"<li><strong>Saúde Pública:</strong> Aumento de doenças respiratórias</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 11px; color: #d32f2f;'><strong>🚨 PRIORIDADE:</strong> Monitoramento crítico de barragens e qualidade de água e unidades de conservação</p>" +
+"</div>"
+);
+
+// 2. CANAÃ DOS CARAJÁS - Mineração de Cobre e Ferro
+L.marker([-6.4952, -49.8783], {
+  icon: L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  })
+})
+.addTo(municipios)
+.bindPopup(
+"<div style='font-family: Arial; width: 320px;'>" +
+"<h3 style='margin: 0 0 8px 0; color: #ff6f00;'>🟠 CANAÃ DOS CARAJÁS</h3>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>Mineração de Cobre e Ferro</strong></p>" +
+"<hr style='margin: 8px 0; border: none; border-top: 1px solid #ddd;'>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>📊 Dados Gerais:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li>População: 89.524 habitantes</li>" +
+"<li>PIB: R$ 34,9 bilhões</li>" +
+"<li>Principais operadoras: Vale S.A.</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 12px;'><strong>⚠️ RISCOS SOCIOAMBIENTAIS ALTOS:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li><strong>Contaminação por Cobre:</strong> Rejeitos de cobre contaminam água subterrânea e superficial</li>" +
+"<li><strong>Impacto em Terras Indígenas:</strong> Comunidades indígenas Awá afetadas diretamente</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 11px; color: #ff6f00;'><strong>🚨 PRIORIDADE:</strong> Proteção de comunidades indígenas e monitoramento de contaminação</p>" +
+"</div>"
+);
+
+// 3. MARABÁ - Polo Regional
+L.marker([-5.3673, -49.1892], {
+  icon: L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  })
+})
+.addTo(municipios)
+.bindPopup(
+"<div style='font-family: Arial; width: 320px;'>" +
+"<h3 style='margin: 0 0 8px 0; color: #f57f17;'>🟡 MARABÁ</h3>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>Polo Regional - Centro de Distribuição</strong></p>" +
+"<hr style='margin: 8px 0; border: none; border-top: 1px solid #ddd;'>" +
+"<p style='margin: 4px 0; font-size: 12px;'><strong>📊 Dados Gerais:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li>População: 288.513 habitantes</li>" +
+"<li>PIB: R$ 13,5 bilhões</li>" +
+"<li>Centro logístico e administrativo para mineração regional</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 12px;'><strong>⚠️ RISCOS SOCIOAMBIENTAIS MÉDIOS-ALTOS:</strong></p>" +
+"<ul style='margin: 4px 0; padding-left: 20px; font-size: 11px;'>" +
+"<li><strong>Pressão Migratória:</strong> Migração desordenada de trabalhadores para mineração causa urbanização caótica</li>" +
+"<li><strong>Infraestrutura Inadequada:</strong> Falta de saneamento, saúde e educação para população crescente</li>" +
+"<li><strong>Desigualdade Social:</strong> Concentração de renda, pobreza e exclusão social</li>" +
+"</ul>" +
+"<p style='margin: 8px 0 4px 0; font-size: 11px; color: #f57f17;'><strong>🚨 PRIORIDADE:</strong> Planejamento urbano e políticas públicas</p>" +
+"</div>"
+);
+
+// Adiciona grupos ao mapa
+municipios.addTo(map);
+
+// Controle de camadas
+L.control.layers(null, {
+  "Municípios de Influência": municipios
+}, { collapsed: false }).addTo(map);
+
+// Escala
+L.control.scale({ metric: true, imperial: false }).addTo(map);
+
+// Legenda
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function () {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML =
+    "<b>Legenda de Riscos</b><br>" +
+    "<i style='background:#d32f2f'></i> Risco Crítico (Parauapebas)<br>" +
+    "<i style='background:#ff6f00'></i> Risco Alto (Canaã dos Carajás)<br>" +
+    "<i style='background:#f57f17'></i> Risco Médio-Alto (Marabá)<br><br>" +
+    "<b>Clique nos marcadores</b><br>" +
+    "para detalhes completos";
+  return div;
+};
+
+legend.addTo(map);
+
+// Adiciona atribuição customizada
+var attribution = L.control.attribution();
+attribution.addAttribution('Dados: IBGE, Vale S.A., Pesquisa sobre Mineração | Coordenadas: Verificadas');
+attribution.addTo(map);
+</script>
+
+</body>
+</html>
